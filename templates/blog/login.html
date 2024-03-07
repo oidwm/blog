@@ -1,0 +1,103 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>wzxBlog | 小王博客</title>
+    <link href="{% static 'css/bootstrap.min.css'%}" rel="stylesheet">
+</head>
+
+<body style="padding-top:70px;">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="javascript:;">Sm@rtBlog</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/">首页</a></li>
+            <li><a href="#">关于</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="page-header">
+                <h2 style="text-align:center;">用户登陆
+                    <small>&nbsp;海内存知己，天涯若比邻!</small>
+                </h2>
+            </div>
+            <form method="post" action="{% url 'blog:login' %}" class="form-horizontal col-md-6 col-md-offset-3 login-form" >
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username" class="col-sm-2 control-label">用户名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="密码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button id="loginbutton" class="btn btn-primary" type="button" style="padding:8px 15px;">登录</button>
+                        <a class="btn btn-link" href="/registe/" style="padding:8px 15px;">新用户注册</a>
+                        <span id="errormsg" style="color:red">{{ error }}</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> <!-- /container -->
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+      <div style="margin-top:15px;text-align:center;"> wzxBlog&nbsp;小王博客&nbsp;&copy;.WZX</div>
+    </nav>
+    <script src="{% static 'js/jquery-2.1.3.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <script>
+        $("#loginbutton").click(function(){
+            // 发起ajax请求
+            $.ajax({
+                // 请求路径
+                url: '/login_ajax/',
+                // 请求类型
+                type: 'post',
+                // 请求数据
+                data: {
+                    // 用户名
+                    username: $("#username").val(),
+                    // 密码
+                    password: $("#password").val(),
+                    // csrfmiddlewaretoken
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                // 请求成功回调函数
+                success: function(data){
+                    // 打印返回数据
+                    console.log(data);
+                    // 如果返回code为0，跳转到首页
+                    if(data.code === 0){
+                        window.location.href = '/';
+                    }else{
+                        // 否则显示错误信息
+                        $("#errormsg").text(data.message);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
