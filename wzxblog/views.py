@@ -15,7 +15,7 @@ class indexview(ListView):
     """
     model = models.Bloginfo
     template_name = 'blog/index.html'
-    context_object_name = 'user_list'
+    context_object_name = 'blog_list'
 
 
 def registe(request):
@@ -32,13 +32,15 @@ def registe(request):
 
             user_obj = models.Reguser.objects.create_user(**form_obj.cleaned_data, is_staff=1, is_superuser=1)
 
+            # 联动完成登录动作
+            auth.login(request, user_obj)
+
             # 跳转到首页
             return redirect("/")
         else:
             return render(request, "blog/registe.html", {'formobj': form_obj})
     else:
         form_obj = forms.reg_form()
-        # print(form_obj.username)
         return render(request, "blog/registe.html", {'formobj': form_obj})
 
 

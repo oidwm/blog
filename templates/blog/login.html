@@ -21,7 +21,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="javascript:;">Sm@rtBlog</a>
+          <a class="navbar-brand" href="javascript:;">wzxBlog</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -69,28 +69,22 @@
     <script src="{% static 'js/bootstrap.min.js'%}"></script>
     <script>
         $("#loginbutton").click(function(){
-            // 发起ajax请求
             $.ajax({
-                // 请求路径
                 url: '/login_ajax/',
-                // 请求类型
                 type: 'post',
-                // 请求数据
                 data: {
                     // 用户名
                     username: $("#username").val(),
                     // 密码
                     password: $("#password").val(),
-                    // csrfmiddlewaretoken
                     csrfmiddlewaretoken: '{{ csrf_token }}'
                 },
                 // 请求成功回调函数
                 success: function(data){
                     // 打印返回数据
                     console.log(data);
-                    // 如果返回code为0，跳转到首页
                     if(data.code === 0){
-                        window.location.href = '/';
+                        window.location.href = 'index.html/';
                     }else{
                         // 否则显示错误信息
                         $("#errormsg").text(data.message);

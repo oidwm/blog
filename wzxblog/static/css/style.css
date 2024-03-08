@@ -1,5 +1,6 @@
 /*链接样式*/
-a:hover, a:focus {
+a:hover, a:focus
+{
     text-decoration: none;
     color: #000;
 }
