@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('wzxblog.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('',views.indexview.as_view(),name='index')
+    path('', views.archives.as_view(), name='index')
 ]
 
 

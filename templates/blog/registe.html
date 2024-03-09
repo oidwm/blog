@@ -35,7 +35,7 @@
                         <small>&nbsp;欢迎您，来到我的博客!</small>
                     </h2>
                 </div>
-                <form novalidate action="/registe/" method="post" class="form-horizontal" enctype="multipart/form-data">
+                <form novalidate action="/registe/" method="POST" class="form-horizontal" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="{{ formobj.username.id_for_label }}" class="col-sm-2 control-label">

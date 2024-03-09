@@ -38,7 +38,7 @@
                     <small>&nbsp;海内存知己，天涯若比邻!</small>
                 </h2>
             </div>
-            <form method="post" action="{% url 'blog:login' %}" class="form-horizontal col-md-6 col-md-offset-3 login-form" >
+            <form method="POST" action="{% url 'blog:login' %}" class="form-horizontal col-md-6 col-md-offset-3 login-form" >
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="username" class="col-sm-2 control-label">用户名</label>
@@ -71,7 +71,7 @@
         $("#loginbutton").click(function(){
             $.ajax({
                 url: '/login_ajax/',
-                type: 'post',
+                type: 'POST',
                 data: {
                     // 用户名
                     username: $("#username").val(),
@@ -95,3 +95,4 @@
     </script>
 </body>
 </html>
+auth.login
