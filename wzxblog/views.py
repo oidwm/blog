@@ -1,6 +1,8 @@
 from django.contrib import auth
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
+from django.shortcuts import get_object_or_404, render
+from .models import Bloginfo, Category, Tag
 
 from . import forms
 from . import models
@@ -17,50 +19,6 @@ class indexview(ListView):
     context_object_name = 'blog_list'
 
 
-# def archives(request, year, month):
-#     """
-#     归档view 方法
-#     :param year:
-#     :param month:
-#     :param request:
-#     :return:
-#     """
-#     blog_list = models.Bloginfo.objects.filter(create_time__year=year, create_time__month=month).order_by(
-#         '-create_time')
-#     return render(request, 'blog/archives.html', {'blog_list': blog_list, 'year': year, 'month': month})
-from django.shortcuts import get_object_or_404, render
-from .models import Bloginfo, Category, Tag
-
-
-def categoryview(request, categoryid):
-    # 获取分类对象
-    category = get_object_or_404(Category, pk=categoryid)
-
-    # 获取属于该分类的博客文章列表
-    blog_list = Bloginfo.objects.filter(category=category).order_by('-create_time')
-
-    # 渲染模板并传递上下文
-    context = {
-        'blog_list': blog_list,
-        'category': category,
-    }
-    return render(request, 'blog/category.html', context)
-
-
-# class categoryview(ListView):
-#     model = models.Bloginfo
-#     template_name = 'blog/category.html'
-#     context_object_name = 'blog_list'
-#
-#     def get_queryset(self):
-#         cate_id = self.kwargs.get('categoryid')
-#         category = get_object_or_404(models.Category, pk=cate_id)
-#         return super(categoryview, self).get_queryset().filter(category=category).order_by('-create_time')
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(categoryview, self).get_context_data(**kwargs)
-#         context['category'] = get_object_or_404(models.Category, pk=self.kwargs.get('categoryid'))
-#         return context
 class tagview(ListView):
     model = models.Bloginfo
     template_name = 'blog/tag.html'
@@ -91,20 +49,6 @@ class authorview(ListView):
         context['author'] = get_object_or_404(models.Reguser, pk=self.kwargs.get('userid'))
         return context
 
-
-# def tagview(request, tagid):
-#     # 从URL中获取tagid参数
-#     tag = get_object_or_404(Tag, pk=tagid)
-#
-#     # 获取属于该标签的博客文章列表
-#     blog_list = Bloginfo.objects.filter(tags=tag).order_by('-create_time')
-#
-#     # 渲染模板并传递上下文
-#     context = {
-#         'blog_list': blog_list,
-#         'tag': tag,
-#     }
-#     return render(request, 'blog/tag.html', context)
 
 class archives(ListView):
     """
@@ -173,6 +117,21 @@ def login(request):
             return render(request, 'blog/login.html', {'error': '用户名或密码错误.'})  # 返回登录页面，并传递错误信息
     else:
         return render(request, 'blog/login.html')  # 如果请求方法不是POST，则返回登录页面
+
+
+def categoryview(request, categoryid):
+    # 获取分类对象
+    category = get_object_or_404(Category, pk=categoryid)
+
+    # 获取属于该分类的博客文章列表
+    blog_list = Bloginfo.objects.filter(category=category).order_by('-create_time')
+
+    # 渲染模板并传递上下文
+    context = {
+        'blog_list': blog_list,
+        'category': category,
+    }
+    return render(request, 'blog/category.html', context)
 
 
 def logout(request):
