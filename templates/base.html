@@ -77,43 +77,12 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    <div class="content-boby">
+    <div class="content-boby" style="margin-bottom:80px">
         <div class="container">
         <div class="row">
             <main class="col-md-8">
                 {% block main %}
                 {% endblock main %}
-                {% for blog in blog_list %}
-                <div class="media">
-                {% if not author %}
-                  <div class="media-left">
-                      <a href='author/{{ blog.author.id }}'>
-                          <img class="media-object img-circle" src="/media/{{ blog.author.head_img }}" alt="进入作者主页"
-                          style="width:100px;height:100px;">
-                      </a>
-                  </div>
-                {% endif %}
-                    <div class="media-body">
-                        <h4 class="media-heading"><a href="#">{{ blog.title }}</a></h4>
-                        <p></p>
-                        <div class="entry-content">
-                            <span class="blog-category"><a href="#">{{ blog.category.name }}</a> </span>
-                            <span class="blog-tags">
-                                <a href="#">
-                                    <time class="entry-date"datetime="{{ blog.create_time }}" >
-                                        {{ blog.create_time }}
-                                    </time>
-                                </a>
-                            </span>
-                            <span class="blog-author"><a href="#">{{ blog.author.nikename }}</a> </span>
-                            <span class="comments-link"><a href="#">123评论</a> </span>
-                            <span class="views-count"><a href="#">{{ blog.views }}</a> </span>
-                        </div>
-                  </div>
-                </div>
-                    {% empty %}
-                    <div class="alert alert-success" role="alert">暂无文章，欢迎投稿</div>
-                {% endfor %}
             </main>
 
             <aside class="col-md-4">
@@ -133,7 +102,7 @@
                         {% get_new_blogs as new_blog_list %}
                         <ul>
                             {% for blog in new_blog_list %}
-                             <li><a href="#">{{ blog.title }}</a></li>
+                             <li><a href="{% url 'blog:blog_detail' blog.id %}">{{ blog.title }}</a></li>
                             {% endfor %}
                         </ul>
                     </div>

@@ -19,4 +19,6 @@ urlpatterns = [
     re_path("tag/(?P<tagid>[0-9]+)/$", views.tagview.as_view(), name='tag'),
 
     path("author/<int:userid>/", views.authorview.as_view(), name='author'),
+
+    path("blog_detail/<int:blogid>/", views.blogdatailview.as_view(), name='blog_detail'),
 ]

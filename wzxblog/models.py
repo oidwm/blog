@@ -32,6 +32,10 @@ class Bloginfo(models.Model):
     def __str__(self):
         return self.title
 
+    def add_one_views(self):
+        self.views += 1
+        self.save(update_fields=["views"])
+
     class Meta:
         ordering = ['-create_time', ]
         verbose_name = "文章"

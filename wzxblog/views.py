@@ -1,6 +1,6 @@
 from django.contrib import auth
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.shortcuts import get_object_or_404, render
 from .models import Bloginfo, Category, Tag
 
@@ -65,6 +65,18 @@ class archives(ListView):
         month = self.kwargs.get('month')
         return super(archives, self).get_queryset().filter(create_time__year=year, create_time__month=month).order_by(
             '-create_time')
+
+class blogdatailview(DetailView):
+    model = models.Bloginfo
+    template_name = 'blog/blog_detail.html'
+    context_object_name = 'blog'
+    pk_url_kwarg = 'blogid'
+
+    def get_object(self, queryset=None):
+        blog = super(blogdatailview, self).get_object(queryset=None)
+        blog.add_one_views()
+        return blog
+
 
 
 def registe(request):

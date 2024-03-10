@@ -1,0 +1,29 @@
+            {% for blog in blog_list %}
+                <div class="media">
+                {% if not author %}
+                  <div class="media-left">
+                      <a href='author/{{ blog.author.id }}'>
+                          <img class="media-object img-circle" src="/media/{{ blog.author.head_img }}" alt="进入作者主页"
+                          style="width:100px;height:100px;">
+                      </a>
+                  </div>
+                {% endif %}
+                    <div class="media-body">
+                        <h4 class="media-heading"><a href="{% url 'blog:blog_detail' blog.id %}">{{ blog.title }}</a></h4>
+                        <p></p>
+                        <div class="entry-content">
+                            <span class="blog-category"><a href="#">{{ blog.category.name }}</a> </span>
+                            <span class="blog-tags">
+                                <a href="#">
+                                    <time class="entry-date"datetime="{{ blog.create_time }}" >
+                                        {{ blog.create_time }}
+                                    </time>
+                                </a>
+                            </span>
+                            <span class="blog-author"><a href="#">{{ blog.author.nikename }}</a> </span>
+                            <span class="comments-link"><a href="#">123评论</a> </span>
+                            <span class="views-count"><a href="#">{{ blog.views }}阅读</a> </span>
+                        </div>
+                  </div>
+                </div>
+                {% endfor %}
